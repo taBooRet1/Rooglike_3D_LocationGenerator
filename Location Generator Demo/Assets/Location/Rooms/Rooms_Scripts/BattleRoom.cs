@@ -5,7 +5,7 @@ using System.Linq;
 
 public class BattleRoom : Room
 {
-    [SerializeField] private RoomData roomData;
+    [SerializeField] private BattleData battleData;
 
     // Flag to prevent the battle from starting multiple times
     private bool battleStarted;
@@ -30,7 +30,7 @@ public class BattleRoom : Room
         CloseDoors();
 
         // Random number of enemies within the specified range
-        int enemiesCount = Random.Range(roomData.minEnemiesCount, roomData.maxEnemiesCount);
+        int enemiesCount = Random.Range(battleData.minEnemiesCount, battleData.maxEnemiesCount);
 
         // Get the room size from the BoxCollider
         Vector3 roomSize = GetComponent<BoxCollider>().size;
@@ -46,12 +46,12 @@ public class BattleRoom : Room
             Vector3 newEnemyPos = new Vector3(x, 0, z) + transform.position;
 
             // Pick a random enemy prefab
-            int index = Random.Range(0, roomData.enemies.Length);
+            int index = Random.Range(0, battleData.enemies.Length);
 
             // Create the enemy and add it to the list
             enemiesInRoom.Add(
                 Instantiate(
-                    roomData.enemies[index],
+                    battleData.enemies[index],
                     newEnemyPos,
                     Random.rotation
                 )
